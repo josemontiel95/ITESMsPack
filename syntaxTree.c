@@ -1,185 +1,119 @@
-/**
- * syntaxTree.c
- * Implementation of the methods to build, manage and resolve a syntax tree
- * @author Jose Pablo Ortiz Lack
- */
 #include "syntaxTree.h"
 #include "symbolTable.h"
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-/**
- * @brief Allocates space for the Node
- * @return The Node or NULL if there is not enough memory
- */
 static Node *allocateNode() {
-
     Node *node = malloc( sizeof( Node ) );
-
     if ( node == NULL ) {
-
         printf( "Error: Memory allocation failed. Program will be terminated\n" );
         exit(1);
-
     }
-
     return node;
 }
 
 Node * createInteger( int value ) {
-
     Node *nInteger = allocateNode();
-
     nInteger->type          = nVALUE;
-
     nInteger->operationType = oINTEGER;
     nInteger->symbolType    = sINTEGER;
     nInteger->value.iValue  = value;
     
     return nInteger;
-
 }
 
 Node * createFloat( float value ) {
-
     Node *nFloat = allocateNode();
-
     nFloat->type          = nVALUE;
-
     nFloat->operationType = oFLOAT;
     nFloat->symbolType    = sFLOAT;
     nFloat->value.fValue  = value;
     
     return nFloat;
-
 }
 
 Node *createMinus( Node *rightOperand ) {
-
     Node *nMinus = allocateNode();
-
     nMinus->type = nVALUE;
-
     switch ( rightOperand->symbolType ) {
 
         case sINTEGER:
-
             nMinus->symbolType    = sINTEGER;
             nMinus->operationType = oINTEGER;
             nMinus->value.iValue  = -1;
-
-        break;
+            break;
         
         case sFLOAT:
-
             nMinus->symbolType    = sFLOAT;
             nMinus->operationType = oFLOAT;
             nMinus->value.fValue  = -1.0;
-
-        break;
-
+            break; 
     }
-
     return nMinus;
-
 }
 
 Node * createSymbol( char  *value , Symbol **symbolTable) {
-
     Node *nSymbol = allocateNode();
-
     nSymbol->type          = nVALUE;
-
     nSymbol->operationType = oID;
     nSymbol->symbolType    = getSymbolType( symbolTable , value );
     nSymbol->value.idValue = value;
-    
     return nSymbol;
-
 }
 
 Node *createSymbolType( SymbolType symbolType ) {
-
     Node *nSymbolType = allocateNode();
-
     nSymbolType->type       = nSYMBOLTYPE;
-
     nSymbolType->symbolType = symbolType;
-
     return nSymbolType;
 }
 
 SymbolType assertSymbolType( SymbolType leftOperand , SymbolType rightOperand ) {
-
-    if ( leftOperand == rightOperand ) { //both operand symbol types match
-
+    if ( leftOperand == rightOperand ) {
         return leftOperand;
-
-    } else { //operands do not match, print error and exit program
-
+    } else { 
         printf( "Error: Types do not match. Program will be terminated.\n" );
-
-        exit(1); //We exit the program as there was an error
+        exit(1);
     }
 }
 
 Node *createOperation( OperationType operationType , Node *leftOperand , Node *rightOperand) {
-
     Node *nOperation = allocateNode();
-
     nOperation->type          = nOPERATION;
-
     nOperation->symbolType    = assertSymbolType( leftOperand->symbolType , rightOperand->symbolType ); //if assert fails compiler will terminate
     nOperation->operationType = operationType;
     nOperation->leftOperand   = leftOperand;
     nOperation->rightOperand  = rightOperand;
 
     return nOperation;
-
 }
 
 Node *createExpresion( ExpresionType expresionType , Node *leftOperand , Node *rightOperand) {
-
     Node *nExpresion = allocateNode();
-
-    nExpresion->type          = nEXPRESION;
-
-    nExpresion->symbolType    = assertSymbolType( leftOperand->symbolType , rightOperand->symbolType ); //if assert fails compiler will terminate
+    nExpresion->type = nEXPRESION;
+    nExpresion->symbolType = assertSymbolType( leftOperand->symbolType , rightOperand->symbolType ); //if assert fails compiler will terminate
     nExpresion->expresionType = expresionType;
-    nExpresion->leftOperand   = leftOperand;
-    nExpresion->rightOperand  = rightOperand;
-
+    nExpresion->leftOperand = leftOperand;
+    nExpresion->rightOperand = rightOperand;
     return nExpresion;
-
 }
 
 Node *createSemiColon( Node *leftStatement , Node *rightStatement ) {
-
     Node *nSemicolon = allocateNode();
-
-    nSemicolon->type           = nSEMICOLON;
-
-    nSemicolon->leftStatement  = leftStatement;
+    nSemicolon->type = nSEMICOLON;
+    nSemicolon->leftStatement = leftStatement;
     nSemicolon->rightStatement = rightStatement;
-
     return nSemicolon;
-
 }
 
 Node *createAssignment( char *identifier , Node *expr , Symbol **symbolTable ) {
-
     Node *nAssignment = allocateNode();
-
-    nAssignment->type          = nASSIGNMENT;
-
-    nAssignment->symbolType    = assertSymbolType( expr->symbolType , getSymbolType( symbolTable , identifier ) );
-    nAssignment->expr          = expr;
+    nAssignment->type = nASSIGNMENT;
+    nAssignment->symbolType = assertSymbolType( expr->symbolType , getSymbolType( symbolTable , identifier ) );
+    nAssignment->expr = expr;
     nAssignment->value.idValue = identifier;
-
     return nAssignment;
-
 }
 
 Node *createIfStatement( Node *expresion , Node *thenOptStmts ) {
