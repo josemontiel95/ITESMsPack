@@ -26,6 +26,9 @@ y: int
  
  else
     print y + 2
-  endif
+  endif;
+
+ print x;
+ print y
  
  end
