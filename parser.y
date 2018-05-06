@@ -4,8 +4,8 @@
 
  #include "symbolTable.h"
  #include "syntaxTree.h"
- #include "Parser.h"
- #include "Lexer.h"
+ #include "Parser.tab.h"
+ #include "lex.yy.h"
  #include <stdio.h>
 
  //Declaracion del arbol y la tabla de simbolos.
@@ -20,9 +20,7 @@ extern int yyerror(char const *);
 
 %error-verbose
 
-//Compiler directives Eliminar
-%output  "Parser.c"
-%defines "Parser.h"
+
 
 //Unite tokens from flex with bison using bison %union directive
 %union {

@@ -15,7 +15,7 @@
 #include "symbolTable.h"
 
 //we include the bison generated file to have access to the tokens
-#include "Parser.h"
+#include "Parser.tab.h"
 
 #include<math.h>
 #include<string.h>
@@ -23,8 +23,6 @@
 %}
 
 /*Compiler directives*/
-
-%option outfile="Lexer.c" header-file="Lexer.h" 
 
 /*Identifier Definitions*/
 
