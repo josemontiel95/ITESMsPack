@@ -195,6 +195,22 @@ Node *createIfStatement( Node *expresion , Node *thenOptStmts ) {
 
 }
 
+Node *createIfElseStatement( Node *expresion , Node *thenOptStmts, Node *elseOptStmts ) {
+
+    Node *nIfElseStatement = allocateNode();
+
+    nIfElseStatement->type         = nIFELSE;
+
+    nIfElseStatement->expresion    = expresion;
+    nIfElseStatement->thenOptStmts = thenOptStmts;
+    nIfElseStatement->elseOptStmts = elseOptStmts;
+
+
+    return nIfElseStatement;
+
+}
+
+
 Node *createWhileStatement( Node *expresion , Node *doOptStmts ) {
 
     Node *nWhileStatement = allocateNode();
@@ -444,6 +460,19 @@ int resolveTree( Node *tree , Symbol **symbolTable) {
 
                 resolveTree( tree->thenOptStmts , symbolTable );
 
+            }
+        
+        break;
+
+        case nIFELSE:
+            
+            if ( evaluateExpresion( tree->expresion , symbolTable ) ) {
+
+                resolveTree( tree->thenOptStmts , symbolTable );
+
+            }
+            else{
+                resolveTree( tree->elseOptStmts , symbolTable );
             }
         
         break;

@@ -24,7 +24,8 @@ typedef enum tagNodeType {
     nFOR,
     nREAD,
     nPRINT,
-    nREPEAT
+    nREPEAT,
+    nIFELSE
 } NodeType;
 
 /**
@@ -94,6 +95,7 @@ typedef struct tagNode {
     /********** IF STMT Components **********/
     struct tagNode *expresion; //conditional expresion to be evaluated
     struct tagNode *thenOptStmts; //optional statements to be executed if expresion is true
+    struct tagNode *elseOptStmts; //statement for else expresion
 
     /********** WHILE STMT Components **********/
     //expresion reused from IF STMT components
