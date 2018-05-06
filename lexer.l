@@ -36,9 +36,9 @@ end        { return END;}
 
 :=         { return ASSIGNMENT; }
 
-int        { yylval.sValue = sINTEGER; return INTEGER; }
+int        { yylval.sValue = vINT; return INTEGER; }
 
-float      { yylval.sValue = sFLOAT; return FLOAT;  }
+float      { yylval.sValue = vFLOAT; return FLOAT;  }
 
 if         { return IF; }
 

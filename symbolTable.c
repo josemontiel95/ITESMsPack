@@ -3,17 +3,17 @@
 #include <string.h>
 #include <stdio.h>
 
-static Symbol *allocateSymbol() {
-    Symbol *symbol = malloc( sizeof( Symbol ) );
+static Variable *allocateSymbol() {
+    Variable *symbol = malloc( sizeof( Variable ) );
     if ( symbol == NULL )
         return NULL;
 
     return symbol;
 }
 
-int insertSymbol( Symbol **head, char *identifier , SymbolType type) {
-    if ( findSymbol( head, identifier ) == NULL ) {
-        Symbol *new = allocateSymbol();
+int insertaSimbolo( Variable **head, char *identifier , VarTipo tipo) {
+    if ( buscaSimbolo( head, identifier ) == NULL ) {
+        Variable *new = allocateSymbol();
         if ( new != NULL ) {
             if ( *head == NULL ) {
                 *head     = new;
@@ -23,13 +23,13 @@ int insertSymbol( Symbol **head, char *identifier , SymbolType type) {
                 *head     = new;
             }
 
-            new->type       = type;
+            new->tipo       = tipo;
             new->identifier = malloc( ( strlen( identifier ) + 1 ) * sizeof( char ) );
             strcpy( new->identifier , identifier );
             
-            if ( type == sINTEGER ) {
+            if ( tipo == vINT ) {
                 new->value.iValue = 0;
-            } else if ( type == sFLOAT ) {
+            } else if ( tipo == vFLOAT ) {
                 new->value.fValue = 0.0;
             }
 
@@ -39,13 +39,13 @@ int insertSymbol( Symbol **head, char *identifier , SymbolType type) {
             exit(1);
         }
     } else {
-        printf( "Error: Symbol to be inserted already exists. Program will be terminated\n" );
+        printf( "Error: Variable to be inserted already exists. Program will be terminated\n" );
         exit(1);
     }
 }
 
-Symbol *findSymbol( Symbol **head , char *identifier ) {
-    Symbol *result =  *head;
+Variable *buscaSimbolo( Variable **head , char *identifier ) {
+    Variable *result =  *head;
     while ( result != NULL ) {
         if ( strcmp( result->identifier , identifier ) == 0 ) {
             return result;
@@ -55,12 +55,12 @@ Symbol *findSymbol( Symbol **head , char *identifier ) {
     return result;
 }
 
-int setIntegerSymbolValue( Symbol **head , char *identifier , int newValue ) {
+int setSimboloInt( Variable **head , char *identifier , int newValue ) {
     if ( *head == NULL ) {
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    Symbol *updateSymbol = findSymbol( head, identifier );
+    Variable *updateSymbol = buscaSimbolo( head, identifier );
     if ( updateSymbol == NULL ) { 
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);   
@@ -69,12 +69,12 @@ int setIntegerSymbolValue( Symbol **head , char *identifier , int newValue ) {
     return 1;
 }
 
-int setFloatSymbolValue( Symbol **head, char *identifier, float newValue ) {
+int setSimboloFloat( Variable **head, char *identifier, float newValue ) {
     if ( *head == NULL ) {
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    Symbol *updateSymbol = findSymbol( head, identifier );
+    Variable *updateSymbol = buscaSimbolo( head, identifier );
     if ( updateSymbol == NULL ) {
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);
@@ -83,12 +83,12 @@ int setFloatSymbolValue( Symbol **head, char *identifier, float newValue ) {
     return 1;
 }
 
-int getIntegerSymbolValue( Symbol **head, char *identifier ) {
+int getSimboloInt( Variable **head, char *identifier ) {
     if ( *head == NULL ) {
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    Symbol *symbol = findSymbol( head, identifier );
+    Variable *symbol = buscaSimbolo( head, identifier );
     if ( symbol == NULL ) { 
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
@@ -96,12 +96,12 @@ int getIntegerSymbolValue( Symbol **head, char *identifier ) {
     return symbol->value.iValue;
 }
 
-float getFloatSymbolValue( Symbol **head , char *identifier ) {
+float getSimboloFloat( Variable **head , char *identifier ) {
     if ( *head == NULL ) {
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    Symbol *symbol = findSymbol( head , identifier );
+    Variable *symbol = buscaSimbolo( head , identifier );
     if ( symbol == NULL ) { 
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
@@ -109,15 +109,15 @@ float getFloatSymbolValue( Symbol **head , char *identifier ) {
     return symbol->value.fValue;
 }
 
-SymbolType getSymbolType( Symbol **head , char * identifier ) {
+VarTipo getTipoSimbolo( Variable **head , char * identifier ) {
     if ( *head == NULL ) {
-        printf("Error: Cannot obtain symbol type from undeclared symbol. Program will be terminated\n");
+        printf("Error: Cannot obtain symbol tipo from undeclared symbol. Program will be terminated\n");
         exit(1);
     }
-    Symbol *symbol = findSymbol( head , identifier ); 
+    Variable *symbol = buscaSimbolo( head , identifier ); 
     if ( symbol == NULL ) {        
-        printf( "Error: Cannot obtain symbol type from undeclared symbol. Program will be terminated\n" );
+        printf( "Error: Cannot obtain symbol tipo from undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    return symbol->type;
+    return symbol->tipo;
 }

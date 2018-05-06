@@ -36,11 +36,11 @@ typedef enum tagExpresionType {
 } ExpresionType;
 
 typedef struct tagNode {  
-    NodeType type; 
+    NodeType tipo; 
 
     /********** EXPR | TERM | FACTOR components **********/
     OperationType operationType; 
-    SymbolType valueType;
+    VarTipo valueType;
     
     union {
         int iValue;
@@ -59,7 +59,7 @@ typedef struct tagNode {
     struct tagNode *rightStatement;
 
     /********** DEC Components **********/
-    SymbolType symbolType;
+    VarTipo symbolType;
 
     /********** ASSIGNMENT STMT Components **********/
     struct tagNode *expr;
@@ -82,13 +82,13 @@ typedef struct tagNode {
 Node *createInteger( int value );
 Node *createFloat( float value );
 Node *createMinus( Node *rightOperand );
-Node *createSymbol( char *value , Symbol **symbolTable );
-Node *createSymbolType( SymbolType symbolType );
-SymbolType assertSymbolType( SymbolType leftOperand , SymbolType rightOperand );
+Node *createSymbol( char *value , Variable **symbolTable );
+Node *createSymbolType( VarTipo symbolType );
+VarTipo assertSymbolType( VarTipo leftOperand , VarTipo rightOperand );
 Node *createOperation( OperationType operationType , Node *leftOperand , Node *rightOperand);
 Node *createExpresion( ExpresionType expresionType , Node *leftOperand , Node *rightOperand );
 Node *createSemiColon( Node *leftStatement , Node *rightStatement );
-Node *createAssignment( char *identifier , Node *expr , Symbol **symbolTable );
+Node *createAssignment( char *identifier , Node *expr , Variable **symbolTable );
 Node *createIfStatement( Node *expresion , Node *thenOptStmts );
 Node *createIfElseStatement( Node *expresion , Node *thenOptStmts, Node *elseOptStmts );
 Node *createWhileStatement( Node *expresion , Node *doOptStmts );
@@ -96,10 +96,10 @@ Node *createRepeatStatement( Node *expresion , Node *doOptStmts );
 Node *createForStatement( char *identifier , Node *expr , Node *stepExpr , Node *untilExpr , Node *doOptStmts );
 Node *createReadStatement( char *identifier );
 Node *createPrintStatement( Node *expr );
-int evaluateIntegerOperation( Node *operation , Symbol **symbolTable );
-float evaluateFloatOperation( Node *operation , Symbol **symbolTable );
-int evaluateExpresion(Node *expresion , Symbol **symbolTable );
-void assignSymbol( char *identifier , Node *expr , Symbol **symbolTable , SymbolType symbolType);
-int resolveTree( Node *tree , Symbol **symbolTable);
+int evaluateIntegerOperation( Node *operation , Variable **symbolTable );
+float evaluateFloatOperation( Node *operation , Variable **symbolTable );
+int evaluateExpresion(Node *expresion , Variable **symbolTable );
+void assignSymbol( char *identifier , Node *expr , Variable **symbolTable , VarTipo symbolType);
+int resolveTree( Node *tree , Variable **symbolTable);
 
 #endif

@@ -9,7 +9,7 @@
  #include <stdio.h>
 
  //Declaracion del arbol y la tabla de simbolos.
- Symbol *symbolTable;
+ Variable *symbolTable;
  Node   *syntaxTree;
 
 //Variables y metodos externos
@@ -28,7 +28,7 @@ extern int yyerror(char const *);
     int iValue;
     float fValue;
     char *idValue;
-    SymbolType sValue;
+    VarTipo sValue;
     Node *node;
     
 }
@@ -103,7 +103,7 @@ decls:        dec SEMICOLON decls
             | dec
             ;
 
-dec:          ID COLON tipo                                                         { insertSymbol( &symbolTable , $1 , $3->symbolType ); }
+dec:          ID COLON tipo                                                         { insertaSimbolo( &symbolTable , $1 , $3->symbolType ); }
             ;
 
 tipo:         INTEGER                                                         { $$ = createSymbolType( $1 ); }
