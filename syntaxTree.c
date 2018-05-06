@@ -4,83 +4,74 @@
 #include <string.h>
 #include <stdio.h>
 
-static Nodo *allocateNodo() {
-    Nodo *nodoAux = malloc( sizeof( Nodo ) );
-    if ( nodoAux == NULL ) {
-        printf( "Error: Memory allocation failed. Program will be terminated\n" );
-        exit(1);
-    }
-    return nodoAux;
-}
-
 //creacion de nodos---------------------------------------------------------------------------
 
 Nodo * nodoInt( int valor ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nVALUE;
-    nodoAux->tipoOp = oINTEGER;
-    nodoAux->simboloTipo    = vINT;
-    nodoAux->value.valInt  = valor;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoVALOR;
+    nodoAux->tipoOp = opINT;
+    nodoAux->simboloTipo = 0;
+    nodoAux->uValor.valInt  = valor;
     return nodoAux;
 }
 
-Nodo * nodoFloat( float valor ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nVALUE;
-    nodoAux->tipoOp = oFLOAT;
-    nodoAux->simboloTipo    = vFLOAT;
-    nodoAux->value.valFloat  = valor;
+Nodo * nodopFLOAT( float valor ) {
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoVALOR;
+    nodoAux->tipoOp = opFLOAT;
+    nodoAux->simboloTipo = 1;
+    nodoAux->uValor.valFloat  = valor;
     return nodoAux;
 }
 
 Nodo *nodoMenos( Nodo *nodoDerecha ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo = nVALUE;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoVALOR;
     switch ( nodoDerecha->simboloTipo ) {
-        case vINT:
-            nodoAux->simboloTipo    = vINT;
-            nodoAux->tipoOp = oINTEGER;
-            nodoAux->value.valInt  = -1;
+        case 0:
+            nodoAux->simboloTipo = 0;
+            nodoAux->tipoOp = opINT;
+            nodoAux->uValor.valInt = -1;
             break;
         
-        case vFLOAT:
-            nodoAux->simboloTipo    = vFLOAT;
-            nodoAux->tipoOp = oFLOAT;
-            nodoAux->value.valFloat  = -1.0;
+        case 1:
+            nodoAux->simboloTipo = 1;
+            nodoAux->tipoOp = opFLOAT;
+            nodoAux->uValor.valFloat  = -1.0;
             break; 
     }
     return nodoAux;
 }
 
 Nodo * nodoSimbolo( char  *valor , Variable **tablaAux) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nVALUE;
-    nodoAux->tipoOp = oID;
-    nodoAux->simboloTipo    = getTipoSimbolo( tablaAux , valor );
-    nodoAux->value.valID = valor;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoVALOR;
+    nodoAux->tipoOp = opID;
+    nodoAux->simboloTipo = getTipoSimbolo( tablaAux , valor );
+    nodoAux->uValor.valID = valor;
     return nodoAux;
 }
 
-Nodo *nodoSimboloTipo( VarTipo tipo ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo       = nTIPOSIMBOLO;
+Nodo *nodoSimboloTipo( int tipo ) {
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoTIPOSIMBOLO;
     nodoAux->simboloTipo = tipo;
     return nodoAux;
 }
 
 Nodo *nodoOperation( OperacionTipo operacion , Nodo *nodoIzquierda , Nodo *nodoDerecha) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nOPERATION;
-    nodoAux->simboloTipo    = isSameTipo( nodoIzquierda->simboloTipo , nodoDerecha->simboloTipo ); 
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoOPERATION;
+    nodoAux->simboloTipo = isSameTipo( nodoIzquierda->simboloTipo , nodoDerecha->simboloTipo ); 
     nodoAux->tipoOp = operacion;
-    nodoAux->nodoIzquierda   = nodoIzquierda;
-    nodoAux->nodoDerecha  = nodoDerecha;
+    nodoAux->nodoIzquierda = nodoIzquierda;
+    nodoAux->nodoDerecha = nodoDerecha;
     return nodoAux;
 }
 
-Nodo *nodoExpresion( ExpresionTipo expresion , Nodo *nodoIzquierda , Nodo *nodoDerecha) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo = nEXPRESION;
+Nodo *nodoExpresion( int expresion , Nodo *nodoIzquierda , Nodo *nodoDerecha) {
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoEXPRESION;
     nodoAux->simboloTipo = isSameTipo( nodoIzquierda->simboloTipo , nodoDerecha->simboloTipo ); 
     nodoAux->tipoExp = expresion;
     nodoAux->nodoIzquierda = nodoIzquierda;
@@ -89,34 +80,34 @@ Nodo *nodoExpresion( ExpresionTipo expresion , Nodo *nodoIzquierda , Nodo *nodoD
 }
 
 Nodo *nodoPuntoyComa( Nodo *nodoIzquierda , Nodo *nodoDerecha ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo = nSEMICOLON;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoSEMICOLON;
     nodoAux->nodoIzq = nodoIzquierda;
     nodoAux->nodoDer = nodoDerecha;
     return nodoAux;
 }
 
 Nodo *nodoAsignacion( char *id , Nodo *expr , Variable **tablaSimbolo ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo = nASSIGNMENT;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoASIGN;
     nodoAux->simboloTipo = isSameTipo( expr->simboloTipo , getTipoSimbolo( tablaSimbolo , id ) );
     nodoAux->expr = expr;
-    nodoAux->value.valID = id;
+    nodoAux->uValor.valID = id;
     return nodoAux;
 }
 
 Nodo *nodoIf( Nodo *expresion , Nodo *optStmts ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo         = nIF;
-    nodoAux->expresion    = expresion;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoIF;
+    nodoAux->expresion = expresion;
     nodoAux->thenOptStmts = optStmts;
     return nodoAux;
 }
 
 Nodo *nodoIfElse( Nodo *expresion , Nodo *optStmts, Nodo *elseOptStmts ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo         = nIFELSE;
-    nodoAux->expresion    = expresion;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoIFELSE;
+    nodoAux->expresion = expresion;
     nodoAux->thenOptStmts = optStmts;
     nodoAux->elseOptStmts = elseOptStmts;
     return nodoAux;
@@ -124,52 +115,40 @@ Nodo *nodoIfElse( Nodo *expresion , Nodo *optStmts, Nodo *elseOptStmts ) {
 
 
 Nodo *nodoWhile( Nodo *expresion , Nodo *optStmts ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo       = nWHILE;
-    nodoAux->expresion  = expresion;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoWHILE;
+    nodoAux->expresion = expresion;
     nodoAux->doOptStmts = optStmts;
     return nodoAux;
 }
 
 Nodo *nodoRepeat( Nodo *expresion , Nodo *optStmts ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo       = nREPEAT;
-    nodoAux->expresion  = expresion;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoREPEAT;
+    nodoAux->expresion = expresion;
     nodoAux->doOptStmts = optStmts;
     return nodoAux;
 }
 
-/*Nodo *nodoFor( char *id , Nodo *expr , Nodo *stepExpr , Nodo *untilExpr , Nodo *doOptStmts ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nFOR;
-    nodoAux->value.valID = id;
-    nodoAux->expr          = expr;
-    nodoAux->stepExpr      = stepExpr;
-    nodoAux->untilExpr     = untilExpr;
-    nodoAux->doOptStmts    = doOptStmts;
-    return nodoAux;
-
-}*/
-
 Nodo *nodoRead( char *id ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo          = nREAD;
-    nodoAux->value.valID = id;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoREAD;
+    nodoAux->uValor.valID = id;
     return nodoAux;
 }
 
 Nodo *nodoPrint( Nodo *expr ) {
-    Nodo *nodoAux = allocateNodo();
-    nodoAux->tipo = nPRINT;
+    Nodo *nodoAux = malloc( sizeof( Nodo ) );
+    nodoAux->tipo = nodoPRINT;
     nodoAux->expr = expr;
     return nodoAux;
 }
 
-VarTipo isSameTipo( VarTipo nodoIzquierda , VarTipo nodoDerecha ) {
-    if ( nodoIzquierda == nodoDerecha ) {
+int isSameTipo( int nodoIzquierda , int nodoDerecha ) {
+    if ( nodoIzquierda == nodoDerecha )
         return nodoIzquierda;
-    } else { 
-        printf( "Error: Types do not match. Program will be terminated.\n" );
+    else { 
+        printf( "Error: Tipos diferentes\n" );
         exit(1);
     }
 }
@@ -177,17 +156,17 @@ VarTipo isSameTipo( VarTipo nodoIzquierda , VarTipo nodoDerecha ) {
 //Interprete------------------------------------------------------------
 int operacionInt( Nodo *operacion , Variable **tablaSimbolo) {
     switch ( operacion->tipoOp ) {
-        case oINTEGER:
-            return operacion->value.valInt;
-        case oID:
-            return getSimboloInt( tablaSimbolo , operacion->value.valID);
-        case oSUM:
+        case opINT:
+            return operacion->uValor.valInt;
+        case opID:
+            return getSimboloInt( tablaSimbolo , operacion->uValor.valID);
+        case opSUM:
             return operacionInt( operacion->nodoIzquierda , tablaSimbolo ) + operacionInt( operacion->nodoDerecha , tablaSimbolo );
-        case oSUB:
+        case opREST:
             return operacionInt( operacion->nodoIzquierda , tablaSimbolo ) - operacionInt( operacion->nodoDerecha , tablaSimbolo );
-        case oMULT:
+        case opMULT:
             return operacionInt( operacion->nodoIzquierda , tablaSimbolo ) * operacionInt( operacion->nodoDerecha , tablaSimbolo );
-        case oDIV:
+        case opDIV:
             return operacionInt( operacion->nodoIzquierda , tablaSimbolo ) / operacionInt( operacion->nodoDerecha , tablaSimbolo );
         default:
             return 0;
@@ -196,17 +175,17 @@ int operacionInt( Nodo *operacion , Variable **tablaSimbolo) {
 
 float operacionFloat( Nodo *operation , Variable **tablaSimbolo) {
     switch (operation->tipoOp) {
-        case oFLOAT:
-            return operation->value.valFloat;
-        case oID:
-            return getSimboloFloat( tablaSimbolo , operation->value.valID);
-        case oSUM:
+        case opFLOAT:
+            return operation->uValor.valFloat;
+        case opID:
+            return getSimbolopFLOAT( tablaSimbolo , operation->uValor.valID);
+        case opSUM:
             return operacionFloat( operation->nodoIzquierda , tablaSimbolo ) + operacionFloat( operation->nodoDerecha , tablaSimbolo );
-        case oSUB:
+        case opREST:
             return operacionFloat( operation->nodoIzquierda , tablaSimbolo ) - operacionFloat( operation->nodoDerecha , tablaSimbolo );
-        case oMULT:
+        case opMULT:
             return operacionFloat( operation->nodoIzquierda , tablaSimbolo ) * operacionFloat( operation->nodoDerecha , tablaSimbolo );
-        case oDIV:
+        case opDIV:
             return operacionFloat( operation->nodoIzquierda , tablaSimbolo ) / operacionFloat( operation->nodoDerecha , tablaSimbolo );
         default:
             return 0;
@@ -215,29 +194,29 @@ float operacionFloat( Nodo *operation , Variable **tablaSimbolo) {
 
 int booleanos(Nodo *expresion , Variable **tablaSimbolo ) {
     switch ( expresion->tipoExp ) {
-        case eGREATER_THAN:
+        case 0:
             switch ( expresion->simboloTipo ) {
-                case vINT:
+                case 0:
                     return operacionInt( expresion->nodoIzquierda , tablaSimbolo ) > operacionInt( expresion->nodoDerecha  , tablaSimbolo );
-                case vFLOAT:
+                case 1:
                     return operacionFloat( expresion->nodoIzquierda , tablaSimbolo ) > operacionFloat( expresion->nodoDerecha  , tablaSimbolo );
                 default:
                     return 0;
             }
-        case eLESS_THAN:
+        case 1:
             switch ( expresion->simboloTipo ) {
-                case vINT:
+                case 0:
                     return operacionInt( expresion->nodoIzquierda , tablaSimbolo ) < operacionInt( expresion->nodoDerecha  , tablaSimbolo );
-                case vFLOAT:
+                case 1:
                     return operacionFloat( expresion->nodoIzquierda , tablaSimbolo ) < operacionFloat( expresion->nodoDerecha  , tablaSimbolo );
                 default:
                     return 0;
             }
-        case eEQUAL_TO:
+        case 2:
             switch ( expresion->simboloTipo ) {
-                case vINT:
+                case 0:
                     return operacionInt( expresion->nodoIzquierda , tablaSimbolo ) == operacionInt( expresion->nodoDerecha  , tablaSimbolo );
-                case vFLOAT:
+                case 1:
                     return operacionFloat( expresion->nodoIzquierda , tablaSimbolo ) == operacionFloat( expresion->nodoDerecha  , tablaSimbolo );
                 default:
                     return 0;
@@ -249,29 +228,29 @@ int booleanos(Nodo *expresion , Variable **tablaSimbolo ) {
 
 int interpretaArbol( Nodo *tree , Variable **tablaSimbolo) {
     switch ( tree->tipo ) {
-        case nSEMICOLON:
+        case nodoSEMICOLON:
             interpretaArbol( tree->nodoIzq, tablaSimbolo );
             interpretaArbol( tree->nodoDer, tablaSimbolo );
             break;
-        case nASSIGNMENT:
+        case nodoASIGN:
             switch ( tree->simboloTipo ) {
-                case vINT:
-                    setSimboloInt( tablaSimbolo , tree->value.valID , operacionInt( tree->expr , tablaSimbolo ) );
+                case 0:
+                    setSimboloInt( tablaSimbolo , tree->uValor.valID , operacionInt( tree->expr , tablaSimbolo ) );
                     break;
-                case vFLOAT:
-                    setSimboloFloat( tablaSimbolo , tree->value.valID , operacionFloat( tree->expr , tablaSimbolo ) );
+                case 1:
+                    setSimbolopFLOAT( tablaSimbolo , tree->uValor.valID , operacionFloat( tree->expr , tablaSimbolo ) );
                     break;
                 default:
                     return 0;
                 break;
             }
             break;
-        case nIF:
+        case nodoIF:
             if ( booleanos( tree->expresion , tablaSimbolo ) ) {
                 interpretaArbol( tree->thenOptStmts , tablaSimbolo );
             }
             break;  
-        case nIFELSE:
+        case nodoIFELSE:
             if ( booleanos( tree->expresion , tablaSimbolo ) ) {
                 interpretaArbol( tree->thenOptStmts , tablaSimbolo );
             }
@@ -279,45 +258,45 @@ int interpretaArbol( Nodo *tree , Variable **tablaSimbolo) {
                 interpretaArbol( tree->elseOptStmts , tablaSimbolo );
             }
             break;
-        case nWHILE:
+        case nodoWHILE:
             while ( booleanos( tree->expresion , tablaSimbolo ) ) {
                 interpretaArbol( tree->doOptStmts , tablaSimbolo );
             }
             break;
 
-        case nREPEAT:
+        case nodoREPEAT:
             do{
                 interpretaArbol( tree->doOptStmts , tablaSimbolo );
             }
             while ( booleanos( tree->expresion , tablaSimbolo ) );
             break;
 
-        case nREAD:
-            switch ( getTipoSimbolo( tablaSimbolo , tree->value.valID ) ) {
-                case vINT: {
-                    printf( "read value for %s: ", tree->value.valID );
-                    int value;
-                    scanf( "%d" , &value );
+        case nodoREAD:
+            switch ( getTipoSimbolo( tablaSimbolo , tree->uValor.valID ) ) {
+                case 0: {
+                    printf( "%s= ", tree->uValor.valID );
+                    int aux;
+                    scanf( "%d" , &aux );
                     printf( "\n" );
-                    setSimboloInt( tablaSimbolo, tree->value.valID , value );
+                    setSimboloInt( tablaSimbolo, tree->uValor.valID , aux );
                     break;
                 }
-                case vFLOAT: {
-                    float value;
-                    printf( "read value for %s: ", tree->value.valID );
-                    scanf( "%f" , &value );
+                case 1: {
+                    float aux;
+                    printf( "%s= ", tree->uValor.valID );
+                    scanf( "%f" , &aux );
                     printf( "\n" );
-                    setSimboloFloat( tablaSimbolo, tree->value.valID , value );
+                    setSimbolopFLOAT( tablaSimbolo, tree->uValor.valID , aux );
                     break;
                 }
             }
             break;
-        case nPRINT:
+        case nodoPRINT:
             switch ( tree->expr->simboloTipo ) {
-                case vINT:
+                case 0:
                     printf ( "%d\n" , operacionInt( tree->expr , tablaSimbolo ) );
                 break;
-                case vFLOAT:
+                case 1:
                     printf ( "%f\n" , operacionFloat( tree->expr , tablaSimbolo ) );
                 break;
             }

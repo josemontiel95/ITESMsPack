@@ -3,121 +3,113 @@
 #include <string.h>
 #include <stdio.h>
 
-static Variable *allocateSymbol() {
-    Variable *symbol = malloc( sizeof( Variable ) );
-    if ( symbol == NULL )
-        return NULL;
-
-    return symbol;
-}
-
-int insertaSimbolo( Variable **head, char *identifier , VarTipo tipo) {
-    if ( buscaSimbolo( head, identifier ) == NULL ) {
-        Variable *new = allocateSymbol();
-        if ( new != NULL ) {
+int insertaSimbolo( Variable **head, char *id , int tipo) {
+    if ( buscaSimbolo( head, id ) == NULL ) {
+        Variable *aux = malloc( sizeof( Variable ) );
+        if ( aux != NULL ) {
             if ( *head == NULL ) {
-                *head     = new;
-                new->next = NULL;
+                *head = aux;
+                aux->next = NULL;
             } else {
-                new->next = *head;
-                *head     = new;
+                aux->next = *head;
+                *head     = aux;
             }
 
-            new->tipo       = tipo;
-            new->identifier = malloc( ( strlen( identifier ) + 1 ) * sizeof( char ) );
-            strcpy( new->identifier , identifier );
-            
-            if ( tipo == vINT ) {
-                new->value.valInt = 0;
-            } else if ( tipo == vFLOAT ) {
-                new->value.valFloat = 0.0;
+            aux->tipo       = tipo;
+            aux->id = malloc( ( strlen( id ) + 1 ) * sizeof( char ) );
+            strcpy( aux->id , id );
+
+            if ( tipo == 0 )
+                aux->uValor.valInt = 0;
+            else if ( tipo == 1 ) {
+                aux->uValor.valFloat = 0.0;
             }
 
             return 1;
         } else {
-            printf( "Error: Memory allocation failed. Program will be terminated\n" );
+            printf( "Error: malloc\n" );
             exit(1);
         }
     } else {
-        printf( "Error: Variable to be inserted already exists. Program will be terminated\n" );
+        printf( "Error: Variable ya existe\n" );
         exit(1);
     }
 }
 
-Variable *buscaSimbolo( Variable **head , char *identifier ) {
-    Variable *result =  *head;
-    while ( result != NULL ) {
-        if ( strcmp( result->identifier , identifier ) == 0 ) {
-            return result;
+Variable *buscaSimbolo( Variable **head , char *id ) {
+    Variable *resultado =  *head;
+    while ( resultado != NULL ) {
+        if ( strcmp( resultado->id , id ) == 0 ) {
+            return resultado;
         }
-        result = result->next;
+        resultado = resultado->next;
     }
-    return result;
+    return resultado;
 }
 
-int setSimboloInt( Variable **head , char *identifier , int newValue ) {
+int setSimboloInt( Variable **head , char *id , int valorNuevo ) {
     if ( *head == NULL ) {
-        printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    Variable *updateSymbol = buscaSimbolo( head, identifier );
-    if ( updateSymbol == NULL ) { 
-        printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
+    Variable *nuevo = buscaSimbolo( head, id );
+    if ( nuevo == NULL ) { 
+        printf( "Error: variable no declarada\n" );
         exit(1);   
     }
-    updateSymbol->value.valInt = newValue;
+    nuevo->uValor.valInt = valorNuevo;
     return 1;
 }
 
-int setSimboloFloat( Variable **head, char *identifier, float newValue ) {
+int setSimbolopFLOAT( Variable **head, char *id, float valorNuevo ) {
     if ( *head == NULL ) {
-        printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    Variable *updateSymbol = buscaSimbolo( head, identifier );
-    if ( updateSymbol == NULL ) {
-        printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
+    Variable *nuevo = buscaSimbolo( head, id );
+    if ( nuevo == NULL ) {
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    updateSymbol->value.valFloat = newValue;
+    nuevo->uValor.valFloat = valorNuevo;
     return 1;
 }
 
-int getSimboloInt( Variable **head, char *identifier ) {
+int getSimboloInt( Variable **head, char *id ) {
     if ( *head == NULL ) {
-        printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    Variable *symbol = buscaSimbolo( head, identifier );
-    if ( symbol == NULL ) { 
-        printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
+    Variable *aux = buscaSimbolo( head, id );
+    if ( aux == NULL ) { 
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    return symbol->value.valInt;
+    return aux->uValor.valInt;
 }
 
-float getSimboloFloat( Variable **head , char *identifier ) {
+float getSimbolopFLOAT( Variable **head , char *id ) {
     if ( *head == NULL ) {
-        printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    Variable *symbol = buscaSimbolo( head , identifier );
-    if ( symbol == NULL ) { 
-        printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
+    Variable *aux = buscaSimbolo( head , id );
+    if ( aux == NULL ) { 
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    return symbol->value.valFloat;
+    return aux->uValor.valFloat;
 }
 
-VarTipo getTipoSimbolo( Variable **head , char * identifier ) {
+int getTipoSimbolo( Variable **head , char * id ) {
     if ( *head == NULL ) {
-        printf("Error: Cannot obtain symbol tipo from undeclared symbol. Program will be terminated\n");
+        printf("Error: variable no declarada\n");
         exit(1);
     }
-    Variable *symbol = buscaSimbolo( head , identifier ); 
-    if ( symbol == NULL ) {        
-        printf( "Error: Cannot obtain symbol tipo from undeclared symbol. Program will be terminated\n" );
+    Variable *aux = buscaSimbolo( head , id ); 
+    if ( aux == NULL ) {        
+        printf( "Error: variable no declarada\n" );
         exit(1);
     }
-    return symbol->tipo;
+    return aux->tipo;
 }

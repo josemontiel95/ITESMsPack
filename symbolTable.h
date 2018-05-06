@@ -1,27 +1,22 @@
-#ifndef __SYMBOL_TABLE_H__
-#define __SYMBOL_TABLE_H__
-
-typedef enum aVarTipo {
-    vINT,
-    vFLOAT
-} VarTipo; //simboloTipo
+#ifndef __TABLA_H__
+#define __TABLA_H__
 
 typedef struct aVariable {
-    VarTipo  tipo; //tipo
-    char* identifier; //nombre
+    int  tipo; //tipo int=0 float=1
+    char* id; //nombre
     union {
         int   valInt; //valor int
         float valFloat; //valor float 
-    } value;
+    } uValor;
     struct aVariable *next;
 } Variable; //Symbol
 
-int insertaSimbolo( Variable **head , char *identifier , VarTipo tipo );//insertSymbol
-Variable *buscaSimbolo( Variable **head , char *identifier );
-int setSimboloInt( Variable **head , char *identifier , int newValue );
-int setSimboloFloat( Variable **head , char *identifier , float newValue );
-int getSimboloInt( Variable **head , char *identifier );
-float getSimboloFloat( Variable **head , char *identifier );
-VarTipo getTipoSimbolo( Variable **head , char * identifier);
+int insertaSimbolo( Variable **head , char *id , int tipo ); //insertSymbol
+Variable *buscaSimbolo( Variable **head , char *id );
+int setSimboloInt( Variable **head , char *id , int valorNuevo );
+int setSimbolopFLOAT( Variable **head , char *id , float valorNuevo );
+int getSimboloInt( Variable **head , char *id );
+float getSimbolopFLOAT( Variable **head , char *id );
+int getTipoSimbolo( Variable **head , char * id);
 
 #endif
