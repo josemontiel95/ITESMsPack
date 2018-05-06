@@ -1363,7 +1363,7 @@ yyreduce:
 
   case 12:
 #line 125 "Parser.y" /* yacc.c:1661  */
-    { (yyval.node) = createIfStatement( (yyvsp[-5].node) , (yyvsp[-3].node) ); }
+    { (yyval.node) = createIfElseStatement( (yyvsp[-5].node) , (yyvsp[-3].node), (yyvsp[-1].node) ); }
 #line 1368 "Parser.c" /* yacc.c:1661  */
     break;
 

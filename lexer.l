@@ -38,75 +38,75 @@ WS       [\n\t ]
 
 %%
 
-program    { return PROGRAM; /*terminal symbol program was found*/ }
+program    { return PROGRAM; }
 
-begin      { return P_BEGIN; /*terminal symbol begin was found*/ }
+begin      { return P_BEGIN;  }
 
-end        { return END; /*terminal symbol end was found*/ }
+end        { return END;}
 
-:=         { return ASSIGNMENT; /*terminal symbol assignment was found*/ }
+:=         { return ASSIGNMENT; }
 
-int        { yylval.sValue = sINTEGER; return INTEGER; /*terminal symbol int was found*/ }
+int        { yylval.sValue = sINTEGER; return INTEGER; }
 
-float      { yylval.sValue = sFLOAT; return FLOAT; /*terminal symbol float was found*/ }
+float      { yylval.sValue = sFLOAT; return FLOAT;  }
 
-if         { return IF; /*terminal symbol if was found*/ }
+if         { return IF; }
 
-else         { return ELSE; /*terminal symbol else was found*/ }
+else       { return ELSE;}
 
-then       { return THEN; /*terminal symbol then was found*/ }
+then       { return THEN; }
 
-endif      { return ENDIF; /*terminal symbol endif was found*/ }
+endif      { return ENDIF;  }
 
-while      { return WHILE; /*terminal symbol while was found*/ }
+while      { return WHILE; }
 
-do         { return DO; /*terminal symbol do was found*/ }
+do         { return DO; }
 
-endw       { return ENDW; /*terminal symbol endw was found*/ }
+endw       { return ENDW;  }
 
-for        { return FOR; /*terminal symbol for was found*/ }
+for        { return FOR;  }
 
-step       { return STEP;  /*terminal symbol step was found*/ }
+step       { return STEP;  }
 
-until      { return UNTIL; /*terminal symbol until was found*/ }
+until      { return UNTIL; }
 
-repeat	   { return REPEAT; /*terminal symbol until was found*/ }
+repeat	   { return REPEAT; }
 
-endfor     { return ENDFOR; /*terminal symbol endfor was found*/ }
+endfor     { return ENDFOR; }
 
-read       { return READ; /*terminal symbol read was found*/ }
+read       { return READ; }
 
-print      { return PRINT; /*terminal symbol print was found*/ }
+print      { return PRINT;  }
 
-{ID}       { yylval.idValue = strdup(yytext); return ID; /*stores the identifier string and returns the ID token*/ }
+{ID}       { yylval.idValue = strdup(yytext); return ID;  }
 
-{NUMFLOAT} { yylval.fValue = atof(yytext); return NUMFLOAT; /*converts the text to a float and returns the NUMFLOAT token*/ }
+{NUMFLOAT} { yylval.fValue = atof(yytext); return NUMFLOAT;}
 
-{NUM}      { yylval.iValue = atoi(yytext); return NUM; /*converts the text to an integer and returns the NUM token*/ }
+{NUM}      { yylval.iValue = atoi(yytext); return NUM;  }
 
-[(]        { return LPAREN; /*terminal symbol left parenthesis was found*/ }
+[(]        { return LPAREN; }
 
-[)]        { return RPAREN; /*terminal symbol right parenthesis was found*/ }
+[)]        { return RPAREN; }
 
-[+]        { return SUM; /*terminal symbol sum was found*/ }
+[+]        { return SUM;  }
 
-[-]        { return SUB; /*terminal symbol substract was found*/ }
+[-]        { return SUB; }
 
-[*]        { return MULT; /*terminal symbol multiply was found*/ }
+[*]        { return MULT;  }
 
-[\/]        { return DIV; /*terminal symbol divide was found*/ }
+[\/]        { return DIV; }
 
-[;]        { return SEMICOLON; /*terminal symbol semicolon was found*/ }
+[;]        { return SEMICOLON;  }
 
-[:]        { return COLON; /*terminal symbol colon was found*/ }
+[:]        { return COLON; }
 
-[>]        { return GREATER_THAN; /*terminal symbol greater than was found*/ }
+[>]        { return GREATER_THAN; }
 
-[<]        { return LESS_THAN; /*terminal symbol less than was found*/ }
+[<]        { return LESS_THAN; }
 
-[=]        { return EQUAL_TO; /*terminal symbol equal to was found*/ }
+[=]        { return EQUAL_TO; }
 
-{WS}       { /*skip blanks*/; }
+{WS}       { /*saltar espacios en blanco*/; }
 
 %%
 

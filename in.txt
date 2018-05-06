@@ -20,7 +20,13 @@ begin
 	 x := x - 1
  until(x > 0);
 
- if ( y = 0 )
+ print y;
+ print y;
+ y := 5;
+
+ if( y = 0)
+   print y
+ else
     print y + 2
- endif
+  endif
 end

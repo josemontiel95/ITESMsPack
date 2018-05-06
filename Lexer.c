@@ -805,178 +805,178 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 41 "Lexer.l"
-{ return PROGRAM; /*terminal symbol program was found*/ }
+{ return PROGRAM; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 43 "Lexer.l"
-{ return P_BEGIN; /*terminal symbol begin was found*/ }
+{ return P_BEGIN;  }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 45 "Lexer.l"
-{ return END; /*terminal symbol end was found*/ }
+{ return END;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 47 "Lexer.l"
-{ return ASSIGNMENT; /*terminal symbol assignment was found*/ }
+{ return ASSIGNMENT; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 49 "Lexer.l"
-{ yylval.sValue = sINTEGER; return INTEGER; /*terminal symbol int was found*/ }
+{ yylval.sValue = sINTEGER; return INTEGER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 51 "Lexer.l"
-{ yylval.sValue = sFLOAT; return FLOAT; /*terminal symbol float was found*/ }
+{ yylval.sValue = sFLOAT; return FLOAT;  }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 53 "Lexer.l"
-{ return IF; /*terminal symbol if was found*/ }
+{ return IF; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 55 "Lexer.l"
-{ return ELSE; /*terminal symbol else was found*/ }
+{ return ELSE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 57 "Lexer.l"
-{ return THEN; /*terminal symbol then was found*/ }
+{ return THEN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 59 "Lexer.l"
-{ return ENDIF; /*terminal symbol endif was found*/ }
+{ return ENDIF;  }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 61 "Lexer.l"
-{ return WHILE; /*terminal symbol while was found*/ }
+{ return WHILE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 63 "Lexer.l"
-{ return DO; /*terminal symbol do was found*/ }
+{ return DO; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 65 "Lexer.l"
-{ return ENDW; /*terminal symbol endw was found*/ }
+{ return ENDW;  }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 67 "Lexer.l"
-{ return FOR; /*terminal symbol for was found*/ }
+{ return FOR;  }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 69 "Lexer.l"
-{ return STEP;  /*terminal symbol step was found*/ }
+{ return STEP;  }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 71 "Lexer.l"
-{ return UNTIL; /*terminal symbol until was found*/ }
+{ return UNTIL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 73 "Lexer.l"
-{ return REPEAT; /*terminal symbol until was found*/ }
+{ return REPEAT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 75 "Lexer.l"
-{ return ENDFOR; /*terminal symbol endfor was found*/ }
+{ return ENDFOR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 77 "Lexer.l"
-{ return READ; /*terminal symbol read was found*/ }
+{ return READ; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 79 "Lexer.l"
-{ return PRINT; /*terminal symbol print was found*/ }
+{ return PRINT;  }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 81 "Lexer.l"
-{ yylval.idValue = strdup(yytext); return ID; /*stores the identifier string and returns the ID token*/ }
+{ yylval.idValue = strdup(yytext); return ID;  }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 83 "Lexer.l"
-{ yylval.fValue = atof(yytext); return NUMFLOAT; /*converts the text to a float and returns the NUMFLOAT token*/ }
+{ yylval.fValue = atof(yytext); return NUMFLOAT;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 85 "Lexer.l"
-{ yylval.iValue = atoi(yytext); return NUM; /*converts the text to an integer and returns the NUM token*/ }
+{ yylval.iValue = atoi(yytext); return NUM;  }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 87 "Lexer.l"
-{ return LPAREN; /*terminal symbol left parenthesis was found*/ }
+{ return LPAREN; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 89 "Lexer.l"
-{ return RPAREN; /*terminal symbol right parenthesis was found*/ }
+{ return RPAREN; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 91 "Lexer.l"
-{ return SUM; /*terminal symbol sum was found*/ }
+{ return SUM;  }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 93 "Lexer.l"
-{ return SUB; /*terminal symbol substract was found*/ }
+{ return SUB; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 95 "Lexer.l"
-{ return MULT; /*terminal symbol multiply was found*/ }
+{ return MULT;  }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 97 "Lexer.l"
-{ return DIV; /*terminal symbol divide was found*/ }
+{ return DIV; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 99 "Lexer.l"
-{ return SEMICOLON; /*terminal symbol semicolon was found*/ }
+{ return SEMICOLON;  }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 101 "Lexer.l"
-{ return COLON; /*terminal symbol colon was found*/ }
+{ return COLON; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 103 "Lexer.l"
-{ return GREATER_THAN; /*terminal symbol greater than was found*/ }
+{ return GREATER_THAN; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 105 "Lexer.l"
-{ return LESS_THAN; /*terminal symbol less than was found*/ }
+{ return LESS_THAN; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 107 "Lexer.l"
-{ return EQUAL_TO; /*terminal symbol equal to was found*/ }
+{ return EQUAL_TO; }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
 #line 109 "Lexer.l"
-{ /*skip blanks*/; }
+{ /*saltar espacios en blanco*/; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
