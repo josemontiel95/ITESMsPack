@@ -1,26 +1,18 @@
 %{
-/*
- * Parser.y
- * 
- * Syntactic and semantic parser for the simple language
- *
- * @author Jose Pablo Ortiz Lack
- *
- * To generate the parser run: "bison Parser.y"
- */
+// Oscar Gaytan Montero A01327292
+// Jose Maria Montiel Palacios A01323942
+
  #include "symbolTable.h"
  #include "syntaxTree.h"
  #include "Parser.h"
  #include "Lexer.h"
  #include <stdio.h>
 
- //Declaration of the syntax tree and symbol table
-
+ //Declaracion del arbol y la tabla de simbolos.
  Symbol *symbolTable;
-
  Node   *syntaxTree;
 
-//External variables and methods
+//Variables y metodos externos
 extern int yylex();
 extern int yyerror(char const *);
 
@@ -28,7 +20,7 @@ extern int yyerror(char const *);
 
 %error-verbose
 
-//Compiler directives
+//Compiler directives Eliminar
 %output  "Parser.c"
 %defines "Parser.h"
 
@@ -43,7 +35,7 @@ extern int yyerror(char const *);
     
 }
 
-/********** TOKEN TYPE DECLARATION **********/
+//==============================Declaracion de tokens
 
 %token <iValue>  NUM
 %token <fValue>  NUMFLOAT
