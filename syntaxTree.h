@@ -2,9 +2,9 @@
 #define __SYNTAX_TREE_H__
 #include "symbolTable.h"
 
-typedef enum tagNodeType {
+typedef enum aNodoTipo {
     nVALUE,
-    nSYMBOLTYPE,
+    nTIPOSIMBOLO,
     nOPERATION,
     nEXPRESION,
     nSEMICOLON,
@@ -17,9 +17,9 @@ typedef enum tagNodeType {
     nPRINT,
     nREPEAT,
     nIFELSE
-} NodeType;
+} NodoTipo;
 
-typedef enum tagOperationType {
+typedef enum aOperacionTipo {
     oINTEGER,
     oFLOAT,
     oID,
@@ -27,79 +27,78 @@ typedef enum tagOperationType {
     oSUB,
     oDIV,
     oMULT
-} OperationType;
+} OperacionTipo;
 
-typedef enum tagExpresionType {
+typedef enum aExpresionTipo {
     eGREATER_THAN,
     eLESS_THAN,
     eEQUAL_TO
-} ExpresionType;
+} ExpresionTipo;
 
-typedef struct tagNode {  
-    NodeType tipo; 
-
+typedef struct aNodo {  
+    NodoTipo tipo; 
     /********** EXPR | TERM | FACTOR components **********/
-    OperationType operationType; 
-    VarTipo valueType;
-    
+    OperacionTipo tipoOp; 
+    VarTipo valorTipo;
+
     union {
-        int iValue;
-        float fValue; 
-        char *idValue;
+        int valInt;
+        float valFloat; 
+        char *valID;
     } value;
     
-    struct tagNode *leftOperand; 
-    struct tagNode *rightOperand; 
+    struct aNodo *nodoIzquierda; 
+    struct aNodo *nodoDerecha; 
 
     /********** EXPRESION components **********/
-    ExpresionType expresionType;
+    ExpresionTipo tipoExp;
     
     /********** SEMICOLON components **********/
-    struct tagNode *leftStatement;
-    struct tagNode *rightStatement;
+    struct aNodo *nodoIzq;
+    struct aNodo *nodoDer;
 
     /********** DEC Components **********/
-    VarTipo symbolType;
+    VarTipo simboloTipo;
 
     /********** ASSIGNMENT STMT Components **********/
-    struct tagNode *expr;
+    struct aNodo *expr;
 
     /********** IF STMT Components **********/
-    struct tagNode *expresion;
-    struct tagNode *thenOptStmts;
-    struct tagNode *elseOptStmts;
+    struct aNodo *expresion;
+    struct aNodo *thenOptStmts;
+    struct aNodo *elseOptStmts;
 
     /********** WHILE STMT Components **********/
-    struct tagNode *doOptStmts;
+    struct aNodo *doOptStmts;
 
     /********** FOR STMT Components **********/
-    struct tagNode *assignment_stmt; 
-    struct tagNode *stepExpr; 
-    struct tagNode *untilExpr;
-} Node;
+    struct aNodo *assignment_stmt; 
+    //struct aNodo *stepExpr; 
+    struct aNodo *untilExpr;
+} Nodo;
 
 
-Node *createInteger( int value );
-Node *createFloat( float value );
-Node *createMinus( Node *rightOperand );
-Node *createSymbol( char *value , Variable **symbolTable );
-Node *createSymbolType( VarTipo symbolType );
-VarTipo assertSymbolType( VarTipo leftOperand , VarTipo rightOperand );
-Node *createOperation( OperationType operationType , Node *leftOperand , Node *rightOperand);
-Node *createExpresion( ExpresionType expresionType , Node *leftOperand , Node *rightOperand );
-Node *createSemiColon( Node *leftStatement , Node *rightStatement );
-Node *createAssignment( char *identifier , Node *expr , Variable **symbolTable );
-Node *createIfStatement( Node *expresion , Node *thenOptStmts );
-Node *createIfElseStatement( Node *expresion , Node *thenOptStmts, Node *elseOptStmts );
-Node *createWhileStatement( Node *expresion , Node *doOptStmts );
-Node *createRepeatStatement( Node *expresion , Node *doOptStmts );
-Node *createForStatement( char *identifier , Node *expr , Node *stepExpr , Node *untilExpr , Node *doOptStmts );
-Node *createReadStatement( char *identifier );
-Node *createPrintStatement( Node *expr );
-int evaluateIntegerOperation( Node *operation , Variable **symbolTable );
-float evaluateFloatOperation( Node *operation , Variable **symbolTable );
-int evaluateExpresion(Node *expresion , Variable **symbolTable );
-void assignSymbol( char *identifier , Node *expr , Variable **symbolTable , VarTipo symbolType);
-int resolveTree( Node *tree , Variable **symbolTable);
+Nodo *nodoInt( int valor );
+Nodo *nodoFloat( float valor );
+Nodo *nodoMenos( Nodo *nodoDerecha );
+Nodo *nodoSimbolo( char *valor , Variable **tablaAux );
+Nodo *nodoSimboloTipo( VarTipo tipo );
+Nodo *nodoOperation( OperacionTipo operacion , Nodo *nodoIzquierda , Nodo *nodoDerecha);
+Nodo *nodoExpresion( ExpresionTipo expresion , Nodo *nodoIzquierda , Nodo *nodoDerecha );
+Nodo *nodoPuntoyComa( Nodo *nodoIzquierda , Nodo *nodoDerecha );
+Nodo *nodoAsignacion( char *id , Nodo *expr , Variable **tablaSimbolo );
+Nodo *nodoIf( Nodo *expresion , Nodo *optStmts );
+Nodo *nodoIfElse( Nodo *expresion , Nodo *optStmts, Nodo *elseOptStmts );
+Nodo *nodoWhile( Nodo *expresion , Nodo *optStmts );
+Nodo *nodoRepeat( Nodo *expresion , Nodo *optStmts );
+//Nodo *nodoFor( char *id , Nodo *expr , Nodo *stepExpr , Nodo *untilExpr , Nodo *doOptStmts );
+Nodo *nodoRead( char *id );
+Nodo *nodoPrint( Nodo *expr );
+VarTipo isSameTipo( VarTipo nodoIzquierda , VarTipo nodoDerecha );
+
+int operacionInt( Nodo *operation , Variable **tablaSimbolo );
+float operacionFloat( Nodo *operation , Variable **tablaSimbolo );
+int booleanos(Nodo *expresion , Variable **tablaSimbolo );
+int interpretaArbol( Nodo *tree , Variable **tablaSimbolo);
 
 #endif

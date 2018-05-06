@@ -28,9 +28,9 @@ int insertaSimbolo( Variable **head, char *identifier , VarTipo tipo) {
             strcpy( new->identifier , identifier );
             
             if ( tipo == vINT ) {
-                new->value.iValue = 0;
+                new->value.valInt = 0;
             } else if ( tipo == vFLOAT ) {
-                new->value.fValue = 0.0;
+                new->value.valFloat = 0.0;
             }
 
             return 1;
@@ -65,7 +65,7 @@ int setSimboloInt( Variable **head , char *identifier , int newValue ) {
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);   
     }
-    updateSymbol->value.iValue = newValue;
+    updateSymbol->value.valInt = newValue;
     return 1;
 }
 
@@ -79,7 +79,7 @@ int setSimboloFloat( Variable **head, char *identifier, float newValue ) {
         printf( "Error: Cannot assign value to undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    updateSymbol->value.fValue = newValue;
+    updateSymbol->value.valFloat = newValue;
     return 1;
 }
 
@@ -93,7 +93,7 @@ int getSimboloInt( Variable **head, char *identifier ) {
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    return symbol->value.iValue;
+    return symbol->value.valInt;
 }
 
 float getSimboloFloat( Variable **head , char *identifier ) {
@@ -106,7 +106,7 @@ float getSimboloFloat( Variable **head , char *identifier ) {
         printf( "Error: Cannot obtain value from undeclared symbol. Program will be terminated\n" );
         exit(1);
     }
-    return symbol->value.fValue;
+    return symbol->value.valFloat;
 }
 
 VarTipo getTipoSimbolo( Variable **head , char * identifier ) {

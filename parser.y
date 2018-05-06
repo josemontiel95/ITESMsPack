@@ -25,9 +25,9 @@ extern int yyerror(char const *);
 //Unite tokens from flex with bison using bison %union directive
 %union {
 
-    int iValue;
-    float fValue;
-    char *idValue;
+    int valInt;
+    float valFloat;
+    char *valID;
     VarTipo sValue;
     Node *node;
     
@@ -35,9 +35,9 @@ extern int yyerror(char const *);
 
 //==============================Declaracion de tokens
 
-%token <iValue>  NUM
-%token <fValue>  NUMFLOAT
-%token <idValue> ID
+%token <valInt>  NUM
+%token <valFloat>  NUMFLOAT
+%token <valID> ID
 %token <sValue>  INTEGER
 %token <sValue>  FLOAT
 
@@ -91,7 +91,7 @@ extern int yyerror(char const *);
 %%
 
 prog:
-              PROGRAM ID opt_decls P_BEGIN opt_stmts END                      { syntaxTree = $5; resolveTree( syntaxTree, &symbolTable ); YYACCEPT;}
+              PROGRAM ID opt_decls P_BEGIN opt_stmts END                      { syntaxTree = $5; interpretaArbol( syntaxTree, &symbolTable ); YYACCEPT;}
             ;
 
 opt_decls:  
@@ -103,51 +103,51 @@ decls:        dec SEMICOLON decls
             | dec
             ;
 
-dec:          ID COLON tipo                                                         { insertaSimbolo( &symbolTable , $1 , $3->symbolType ); }
+dec:          ID COLON tipo                                                         { insertaSimbolo( &symbolTable , $1 , $3->simboloTipo ); }
             ;
 
-tipo:         INTEGER                                                         { $$ = createSymbolType( $1 ); }
-            | FLOAT                                                           { $$ = createSymbolType( $1 ); }
+tipo:         INTEGER                                                         { $$ = nodoSimboloTipo( $1 ); }
+            | FLOAT                                                           { $$ = nodoSimboloTipo( $1 ); }
             ;
 
-stmt:         ID ASSIGNMENT expr                                              { $$ = createAssignment( $1 , $3 , &symbolTable ); }
-            | IF  LPAREN expresion RPAREN opt_stmts ENDIF                     { $$ = createIfStatement( $3 , $5 ); }
-            | IF  LPAREN expresion RPAREN opt_stmts ELSE opt_stmts ENDIF      { $$ = createIfElseStatement( $3 , $5, $7 ); }
-            | WHILE LPAREN expresion RPAREN opt_stmts ENDW                    { $$ = createWhileStatement( $3 , $5 ); }
-            | REPEAT opt_stmts UNTIL LPAREN expresion RPAREN                  { $$ = createRepeatStatement( $5 , $2 ); }
-            | FOR ID ASSIGNMENT expr STEP expr UNTIL expr DO opt_stmts ENDFOR { $$ = createForStatement( $2 , $4 , $6 , $8 , $10 ); }
-            | READ ID                                                         { $$ = createReadStatement( $2 ); }
-            | PRINT expr                                                      { $$ = createPrintStatement( $2 ); }
+stmt:         ID ASSIGNMENT expr                                              { $$ = nodoAsignacion( $1 , $3 , &symbolTable ); }
+            | IF  LPAREN expresion RPAREN opt_stmts ENDIF                     { $$ = nodoIf( $3 , $5 ); }
+            | IF  LPAREN expresion RPAREN opt_stmts ELSE opt_stmts ENDIF      { $$ = nodoIfElse( $3 , $5, $7 ); }
+            | WHILE LPAREN expresion RPAREN opt_stmts ENDW                    { $$ = nodoWhile( $3 , $5 ); }
+            | REPEAT opt_stmts UNTIL LPAREN expresion RPAREN                  { $$ = nodoRepeat( $5 , $2 ); }
+            | FOR ID ASSIGNMENT expr STEP expr UNTIL expr DO opt_stmts ENDFOR { /*$$ = nodoFor( $2 , $4 , $6 , $8 , $10 ); */}
+            | READ ID                                                         { $$ = nodoRead( $2 ); }
+            | PRINT expr                                                      { $$ = nodoPrint( $2 ); }
             ;
 
 opt_stmts:    stmt_lst                                                        {$$ = $1; }
             | /*empty*/                                                       { $$ = NULL; }
             ;
 
-stmt_lst:     stmt SEMICOLON stmt_lst                                         { $$ = createSemiColon( $1 , $3 ); }
+stmt_lst:     stmt SEMICOLON stmt_lst                                         { $$ = nodoPuntoyComa( $1 , $3 ); }
             | stmt                                                            { $$ = $1; }
             ;
 
-expr:         expr SUM term                                                   { $$ = createOperation( oSUM , $1 , $3); }
-            | expr SUB term                                                   { $$ = createOperation( oSUB , $1 , $3); }
-            | SUB term                                                        { $$ = createOperation( oMULT , createMinus( $2 ) , $2 ); }
+expr:         expr SUM term                                                   { $$ = nodoOperation( oSUM , $1 , $3); }
+            | expr SUB term                                                   { $$ = nodoOperation( oSUB , $1 , $3); }
+            | SUB term                                                        { $$ = nodoOperation( oMULT , nodoMenos( $2 ) , $2 ); }
             | term                                                            { $$ = $1; }
             ;
 
-term:         term MULT factor                                                { $$ = createOperation( oMULT , $1 , $3); }
-            | term DIV factor                                                 { $$ = createOperation( oDIV , $1 , $3); }
+term:         term MULT factor                                                { $$ = nodoOperation( oMULT , $1 , $3); }
+            | term DIV factor                                                 { $$ = nodoOperation( oDIV , $1 , $3); }
             | factor                                                          { $$ = $1; }
             ;
 
 factor:       LPAREN expr RPAREN                                              { $$ = $2; }
-            | ID                                                              { $$ = createSymbol( $1 , &symbolTable); }
-            | NUM                                                             { $$ = createInteger( $1 ); }
-            | NUMFLOAT                                                        { $$ = createFloat( $1 ); }
+            | ID                                                              { $$ = nodoSimbolo( $1 , &symbolTable); }
+            | NUM                                                             { $$ = nodoInt( $1 ); }
+            | NUMFLOAT                                                        { $$ = nodoFloat( $1 ); }
             ;
 
-expresion:    expr LESS_THAN expr                                             { $$ = createExpresion( eLESS_THAN , $1 , $3); }
-            | expr GREATER_THAN expr                                          { $$ = createExpresion( eGREATER_THAN , $1 , $3); }
-            | expr EQUAL_TO expr                                              { $$ = createExpresion( eEQUAL_TO , $1 , $3 ); }
+expresion:    expr LESS_THAN expr                                             { $$ = nodoExpresion( eLESS_THAN , $1 , $3); }
+            | expr GREATER_THAN expr                                          { $$ = nodoExpresion( eGREATER_THAN , $1 , $3); }
+            | expr EQUAL_TO expr                                              { $$ = nodoExpresion( eEQUAL_TO , $1 , $3 ); }
             ;
 
 %%

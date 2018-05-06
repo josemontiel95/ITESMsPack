@@ -4,14 +4,14 @@
 typedef enum aVarTipo {
     vINT,
     vFLOAT
-} VarTipo; //SymbolType
+} VarTipo; //simboloTipo
 
 typedef struct aVariable {
     VarTipo  tipo; //tipo
     char* identifier; //nombre
     union {
-        int   iValue; //valor int
-        float fValue; //valor float 
+        int   valInt; //valor int
+        float valFloat; //valor float 
     } value;
     struct aVariable *next;
 } Variable; //Symbol

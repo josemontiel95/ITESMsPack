@@ -68,11 +68,11 @@ read       { return READ; }
 
 print      { return PRINT;  }
 
-{ID}       { yylval.idValue = strdup(yytext); return ID;  }
+{ID}       { yylval.valID = strdup(yytext); return ID;  }
 
-{NUMFLOAT} { yylval.fValue = atof(yytext); return NUMFLOAT;}
+{NUMFLOAT} { yylval.valFloat = atof(yytext); return NUMFLOAT;}
 
-{NUM}      { yylval.iValue = atoi(yytext); return NUM;  }
+{NUM}      { yylval.valInt = atoi(yytext); return NUM;  }
 
 [(]        { return LPAREN; }
 
