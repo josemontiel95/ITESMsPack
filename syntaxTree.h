@@ -201,7 +201,7 @@ Node *createAssignment( char *identifier , Node *expr , Symbol **symbolTable );
  * @return if statement tree
  */
 Node *createIfStatement( Node *expresion , Node *thenOptStmts );
-
+Node *createIfElseStatement( Node *expresion , Node *thenOptStmts, Node *elseOptStmts );
 /**
  * @brief creates if statement tree
  * @param expresion conditional expresion to be resolved
