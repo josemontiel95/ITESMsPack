@@ -1,6 +1,5 @@
 #ifndef __SYNTAX_TREE_H__
 #define __SYNTAX_TREE_H__
-
 #include "symbolTable.h"
 
 typedef enum tagNodeType {
