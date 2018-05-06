@@ -55,28 +55,29 @@ extern int yydebug;
     ASSIGNMENT = 265,
     IF = 266,
     WHILE = 267,
-    FOR = 268,
-    READ = 269,
-    PRINT = 270,
-    SUM = 271,
-    SUB = 272,
-    MULT = 273,
-    DIV = 274,
-    GREATER_THAN = 275,
-    LESS_THAN = 276,
-    EQUAL_TO = 277,
-    PROGRAM = 278,
-    P_BEGIN = 279,
-    END = 280,
-    THEN = 281,
-    ENDIF = 282,
-    DO = 283,
-    ENDW = 284,
-    STEP = 285,
-    UNTIL = 286,
-    ENDFOR = 287,
-    LPAREN = 288,
-    RPAREN = 289
+    REPEAT = 268,
+    FOR = 269,
+    READ = 270,
+    PRINT = 271,
+    SUM = 272,
+    SUB = 273,
+    MULT = 274,
+    DIV = 275,
+    GREATER_THAN = 276,
+    LESS_THAN = 277,
+    EQUAL_TO = 278,
+    PROGRAM = 279,
+    P_BEGIN = 280,
+    END = 281,
+    THEN = 282,
+    ENDIF = 283,
+    DO = 284,
+    ENDW = 285,
+    STEP = 286,
+    UNTIL = 287,
+    ENDFOR = 288,
+    LPAREN = 289,
+    RPAREN = 290
   };
 #endif
 
@@ -95,7 +96,7 @@ union YYSTYPE
     Node *node;
     
 
-#line 99 "Parser.h" /* yacc.c:1915  */
+#line 100 "Parser.h" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;
