@@ -1,0 +1,21 @@
+program uno
+x: int;
+y: int
+begin
+ read x;
+ while (x < 10)
+	 print x;
+	 x := x + 1
+ endw;
+
+ print x;
+
+ if ( x = 0 )
+   y := x + 2;
+   print y
+ endif;
+
+ if ( y = 0 )
+    print y + 2
+ endif
+end
