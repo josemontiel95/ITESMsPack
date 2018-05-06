@@ -1,14 +1,6 @@
 %{
-/**
- * lexer.l
- *
- * lexer file for the simple language
- *
- * @author Jose Pablo Ortiz Lack
- *
- * To generate the lexical analyzer run: "flex Lexer.l"
- *
- **/
+// Oscar Gaytan Montero A01327292
+// Jose Maria Montiel Palacios A01323942
 
 //Include our syntax Tree and symbol table libraries
 #include "syntaxTree.h"
