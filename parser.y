@@ -29,7 +29,7 @@ extern int yyerror(char const *);
     float valFloat;
     char *valID;
     VarTipo sValue;
-    Nodo *nodo;
+    Nodo *node;
     
 }
 
