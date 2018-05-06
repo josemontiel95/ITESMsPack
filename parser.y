@@ -122,7 +122,7 @@ tipo:         INTEGER                                                         { 
 stmt:         ID ASSIGNMENT expr                                              { $$ = createAssignment( $1 , $3 , &symbolTable ); }
             | IF  LPAREN expresion RPAREN opt_stmts ENDIF                     { $$ = createIfStatement( $3 , $5 ); }
             | WHILE LPAREN expresion RPAREN opt_stmts ENDW                    { $$ = createWhileStatement( $3 , $5 ); }
-            | REPEAT opt_stmts UNTIL LPAREN expresion RPAREN                  { $$ = createWhileStatement( $3 , $5 ); }
+            | REPEAT opt_stmts UNTIL LPAREN expresion RPAREN                  { $$ = createRepeatStatement( $3 , $5 ); }
             | FOR ID ASSIGNMENT expr STEP expr UNTIL expr DO opt_stmts ENDFOR { $$ = createForStatement( $2 , $4 , $6 , $8 , $10 ); }
             | READ ID                                                         { $$ = createReadStatement( $2 ); }
             | PRINT expr                                                      { $$ = createPrintStatement( $2 ); }
