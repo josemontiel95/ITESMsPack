@@ -1,0 +1,10 @@
+program ifprog 
+	x: int;
+	j: int
+begin
+	read x;
+	read j;
+	if(x > j)
+		print x
+	endif
+end

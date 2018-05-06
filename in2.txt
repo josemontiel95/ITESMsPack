@@ -1,0 +1,32 @@
+program inDos 
+	x: int;
+	j: int
+begin
+	read x;
+	read j;
+	while(j < 3)
+		if (x<10)
+			print x;
+			j := j + 1
+		else
+			print j;
+			j := j + 1
+		endif
+	endw;
+
+	read x;
+	read j;
+
+	repeat
+		if (x<10)
+			print x;
+			j := j + 1
+		else
+			print j;
+			j := j + 1
+		endif
+	until (j < 3);
+
+	print x;
+	print j
+end

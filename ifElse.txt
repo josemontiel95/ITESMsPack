@@ -1,0 +1,12 @@
+program ifElseprog 
+	x: int;
+	j: int
+begin
+	read x;
+	read j;
+	if(x > j)
+		print x
+	else
+		print j
+	endif
+end

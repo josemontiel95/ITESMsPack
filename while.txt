@@ -1,0 +1,9 @@
+program whileProg 
+	x: int
+begin
+	read x;
+	while(x < 10)
+		print x;
+		x := x + 1
+	endw
+end

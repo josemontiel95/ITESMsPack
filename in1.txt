@@ -1,9 +1,8 @@
-program uno 
+program inUno 
 x: int;
 y: int
  begin
  read x;
- j := 0;
  while(x < 10)
  print x;
  x := x + 1

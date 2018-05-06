@@ -1,0 +1,9 @@
+program repeateProg 
+	x: int
+begin
+	read x;
+	repeat
+		print x;
+		x := x + 1
+	until (x < 10)
+end
