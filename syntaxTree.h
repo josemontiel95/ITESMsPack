@@ -207,6 +207,7 @@ Node *createIfStatement( Node *expresion , Node *thenOptStmts );
  * @return while statement tree
  */
 Node *createWhileStatement( Node *expresion , Node *doOptStmts );
+Node *createRepeatStatement( Node *expresion , Node *doOptStmts );
 
 /**
  * @brief creates for loop statement tree
