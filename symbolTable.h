@@ -1,5 +1,6 @@
 #ifndef __SYMBOL_TABLE_H__
 #define __SYMBOL_TABLE_H__
+
 typedef enum tagSymbolType {
     sINTEGER,
     sFLOAT
@@ -8,12 +9,10 @@ typedef enum tagSymbolType {
 typedef struct tagSymbol {
     SymbolType  type; //tipo
     char* identifier; //nombre
-    
     union {
-        int   iValue; //integer value
-        float fValue; //float value
-    } value; //value of the symbol
-
+        int   iValue; //valor int
+        float fValue; //valor float 
+    } value;
     struct tagSymbol *next;
 } Symbol;
 
