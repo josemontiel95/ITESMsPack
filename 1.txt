@@ -27,8 +27,5 @@ y: int
  else
     print y + 2
   endif
-
-
-  
  
  end
