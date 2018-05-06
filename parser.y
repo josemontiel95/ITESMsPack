@@ -10,7 +10,7 @@
 
  //Declaracion del arbol y la tabla de simbolos.
  Variable *symbolTable;
- Node   *syntaxTree;
+ Nodo   *syntaxTree;
 
 //Variables y metodos externos
 extern int yylex();
@@ -29,7 +29,7 @@ extern int yyerror(char const *);
     float valFloat;
     char *valID;
     VarTipo sValue;
-    Node *node;
+    Nodo *nodo;
     
 }
 
