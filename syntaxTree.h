@@ -23,8 +23,8 @@ typedef enum tagNodeType {
     nWHILE,
     nFOR,
     nREAD,
-    nPRINT
-    
+    nPRINT,
+    nREPEAT
 } NodeType;
 
 /**

@@ -208,6 +208,21 @@ Node *createWhileStatement( Node *expresion , Node *doOptStmts ) {
 
 }
 
+Node *createRepeatStatement( Node *expresion , Node *doOptStmts ) {
+
+    Node *nRepeatStatement = allocateNode();
+
+    nRepeatStatement->type       = nREPEAT;
+
+    nRepeatStatement->expresion  = expresion;
+    nRepeatStatement->doOptStmts = doOptStmts;
+
+    return nRepeatStatement;
+
+}
+
+
+
 Node *createForStatement( char *identifier , Node *expr , Node *stepExpr , Node *untilExpr , Node *doOptStmts ) {
 
     Node *nForStatement = allocateNode();
@@ -440,6 +455,14 @@ int resolveTree( Node *tree , Symbol **symbolTable) {
                 resolveTree( tree->doOptStmts , symbolTable );
 
             }
+        
+        break;
+
+        case nREPEAT:
+            do{
+                resolveTree( tree->doOptStmts , symbolTable );
+            }
+            while ( evaluateExpresion( tree->expresion , symbolTable ) );
         
         break;
 
