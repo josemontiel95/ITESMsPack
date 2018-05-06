@@ -58,6 +58,7 @@ extern int yyerror(char const *);
 %token <node> WHILE
 %token <node> REPEAT
 %token <node> FOR
+%token <node> ELSE
 %token <node> READ
 %token <node> PRINT
 %token <node> SUM
@@ -121,6 +122,7 @@ tipo:         INTEGER                                                         { 
 
 stmt:         ID ASSIGNMENT expr                                              { $$ = createAssignment( $1 , $3 , &symbolTable ); }
             | IF  LPAREN expresion RPAREN opt_stmts ENDIF                     { $$ = createIfStatement( $3 , $5 ); }
+            | IF  LPAREN expresion RPAREN opt_stmts ELSE opt_stmts ENDIF      { $$ = createIfElseStatement( $3 , $5, $7 ); }
             | WHILE LPAREN expresion RPAREN opt_stmts ENDW                    { $$ = createWhileStatement( $3 , $5 ); }
             | REPEAT opt_stmts UNTIL LPAREN expresion RPAREN                  { $$ = createRepeatStatement( $5 , $2 ); }
             | FOR ID ASSIGNMENT expr STEP expr UNTIL expr DO opt_stmts ENDFOR { $$ = createForStatement( $2 , $4 , $6 , $8 , $10 ); }

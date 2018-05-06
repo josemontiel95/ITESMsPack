@@ -15,6 +15,11 @@ begin
    print y
  endif;
 
+ repeat
+	 print x;
+	 x := x - 1
+ until(x > 0);
+
  if ( y = 0 )
     print y + 2
  endif

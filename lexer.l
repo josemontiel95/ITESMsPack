@@ -52,6 +52,8 @@ float      { yylval.sValue = sFLOAT; return FLOAT; /*terminal symbol float was f
 
 if         { return IF; /*terminal symbol if was found*/ }
 
+else         { return ELSE; /*terminal symbol else was found*/ }
+
 then       { return THEN; /*terminal symbol then was found*/ }
 
 endif      { return ENDIF; /*terminal symbol endif was found*/ }
